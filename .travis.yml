@@ -13,6 +13,9 @@
       - sys-img-armeabi-v7a-android-22
       - extra-android-m2repository
 
+  before_install:
+    - yes | sudo sdkmanager --licenses
+
   before_script:
     # Create and start emulator
     - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
