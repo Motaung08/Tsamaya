@@ -13,6 +13,12 @@ env:
     - QEMU_AUDIO_DRV=none
     - GRADLE_OPTS='-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dkotlin.incremental=false -DdisablePreDex'
 
+
+licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
 before_install:
   - sudo service postgresql stop || true
   - sudo service mysql stop || true
