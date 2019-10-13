@@ -41,6 +41,8 @@ public class RanksTest {
 
     Instrumentation.ActivityMonitor routesMonitor = getInstrumentation().addMonitor(Routes.class.getName(),null,false);
 
+    Instrumentation.ActivityMonitor rroutesMonitor = getInstrumentation().addMonitor(Routes.class.getName(),null,false);
+
 
     @Before
     public void setUp() throws Exception {
