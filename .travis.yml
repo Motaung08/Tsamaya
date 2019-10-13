@@ -53,7 +53,8 @@ install:
 
 
 script:
-  ./gradlew connectedAndroidTest
+  ./gradlew testDebugUnitTest
+  ./gradlew createDebugCoverageReport
 
 after_success:
   - pwd
