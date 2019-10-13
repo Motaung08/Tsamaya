@@ -7,10 +7,10 @@
     components:
       - platform-tools
       - tools
-      - build-tools-24.0.2
-      - android-22
-      - android-24
-      - sys-img-armeabi-v7a-android-22
+      - build-tools-28.0.0
+      - android-26
+      - sys-img-x86-android-26
+      - sys-img-armeabi-v7a-android-17
       - extra-android-m2repository
 
   before_install:
