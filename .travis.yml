@@ -1,64 +1,19 @@
 language: android
-sudo: required
-group: edge
-
-#dist: precise
-
-jdk: oraclejdk8
-
-before_cache:
-  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/modules-2/modules-2.lock # Avoid to repack it due locks
-  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/classAnalysis/classAnalysis.lock
-  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/jarSnapshots/jarSnapshots.lock
-
-cache:
-  directories:
-    - ${TRAVIS_BUILD_DIR}/gradle/caches/
-    - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
-
-env:
-  global:
-    - ANDROID_API_LEVEL=26
-    - ANDROID_TEST_LEVEL=26
-    - ANDROID_BUILD_TOOLS_VERSION=26.1.1
-    #    - ANDROID_BUILD_TOOLS_VERSION=26.0.1
-    - ANDROID_ABI=x86_64
-    - ANDROID_TAG=google_apis
-
+jdk: openjdk7
 android:
-  components: # Cookbooks version: https://github.com/travis-ci/travis-cookbooks/tree/9c6cd11
-    - tools # Update preinstalled tools from revision 24.0.2 to 24.4.1
-    - build-tools-$ANDROID_BUILD_TOOLS_VERSION # Match build-tools version used in build.gradle
-    - platform-tools # Update platform-tools to revision 25.0.3+
-    - tools # Update tools from revision 24.4.1 to 25.2.5
-
-
-before_install:
-  #- sudo apt upgrade -y
-  - chmod +x gradlew
-  #- mkdir "$ANDROID_HOME/licenses" || true
-  #- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-  #- android list targets
-  #- ./gradlew dependencies || true
-
-install:
-  - sdkmanager --list || true
-  - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL" # Latest platform required by SDK tools
-  - echo yes | sdkmanager "extras;android;m2repository"
-  - echo yes | sdkmanager "extras;google;m2repository"
-  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
-  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - sdkmanager --list || true
-
-
+  components:
+    - build-tools-26.1.1
+    - android-26
+    - extra
+    - addon
+    - sys-img-armeabi-v7a-android-19
+before_script:
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 script:
-  ./gradlew testDebugUnitTest
-  ./gradlew createDebugCoverageReport
-
-after_success:
-  - pwd
-  - bash <(curl -s https://codecov.io/bash)
+  - ./gradlew connectedAndroidTest
 
 
 
