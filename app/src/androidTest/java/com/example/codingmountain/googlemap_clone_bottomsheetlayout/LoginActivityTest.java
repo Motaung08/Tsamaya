@@ -58,14 +58,17 @@ public class LoginActivityTest {
         assertNotNull(loginActivity.findViewById(R.id.input_email));
         assertNotNull(loginActivity.findViewById(R.id.input_password));
 
+        loginActivity._emailText.setText("alec@gmail.com");
+        loginActivity._passwordText.setText("123456");
+        
+//         onView(withId(R.id.input_email)).perform(typeText("alec@gmail.com"));
+//         closeSoftKeyboard();
+//         Thread.sleep(1000);
 
-        onView(withId(R.id.input_email)).perform(typeText("alec@gmail.com"));
-        closeSoftKeyboard();
-        Thread.sleep(1000);
-
-        onView(withId(R.id.input_password)).perform(typeText("123456"));
-        closeSoftKeyboard();
-        Thread.sleep(1000);
+//         onView(withId(R.id.input_password)).perform(typeText("123456"));
+//         closeSoftKeyboard();
+//         Thread.sleep(1000);
+        
         onView(withId(R.id.btn_login)).perform(click());
 
         Activity MapActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,10000);
