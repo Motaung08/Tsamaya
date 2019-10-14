@@ -53,7 +53,7 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void login() {
+    public void login() throws InterruptedException {
         assertNotNull(loginActivity.findViewById(R.id.btn_login));
         assertNotNull(loginActivity.findViewById(R.id.input_email));
         assertNotNull(loginActivity.findViewById(R.id.input_password));
@@ -62,10 +62,11 @@ public class LoginActivityTest {
         onView(withId(R.id.input_email)).perform(typeText("alec@gmail.com"));
         closeSoftKeyboard();
         Thread.sleep(1000);
-        
+
         onView(withId(R.id.input_password)).perform(typeText("123456"));
         closeSoftKeyboard();
         Thread.sleep(1000);
+        onView(withId(R.id.btn_login)).perform(click());
 
         Activity MapActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,10000);
 
