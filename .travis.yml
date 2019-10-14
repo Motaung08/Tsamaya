@@ -1,113 +1,57 @@
+sudo: false
 language: android
-jdk: openjdk7
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+env:
+  global:
+    - ANDROID_TARGET=android-22
+    - ANDROID_ABI=armeabi-v7a
 android:
   components:
-    - build-tools-26.1.1
+    - tools #
+    - tools
+    - platform-tools
+    - build-tools-26.1.0
     - android-26
+    - build-tools-28.0.3
+    - android-28
+    - add-on
     - extra
-    - addon
-    - sys-img-x86-android-26
-before_script:
-  - echo no | android create avd --force -n test -t android-26 --abi x86
+    - $ANDROID_TARGET
+    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
+before_install:
+  - chmod +x ./gradlew
+  - ./gradlew dependencies || true
+
+script:
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --device 'Nexus 4' --sdcard 128M
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-script:
-  - ./gradlew connectedAndroidTest
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  #- ./gradlew connectedDebugAndroidTest --info
+  - ./gradlew createDebugCoverageReport --info
+after_failure:
+  # - echo 'FAILURE'
+  # Check apt configuration: http://docs.travis-ci.com/user/ci-environment/#apt-configuration
+  # Comment out the lines below to show log about tests with app name customized on exports section.
+  - sudo apt-get install -qq lynx
+  - export MOD_NAME=Tsamaya
+  - export LOG_DIR=${TRAVIS_BUILD_DIR}/${MOD_NAME}/build/outputs/reports/androidTests/connected/
+  - lynx --dump ${LOG_DIR}com.android.builder.testing.ConnectedDevice.html > myConnectedDevice.log
+  - lynx --dump ${LOG_DIR}com.android.builder.testing.html > myTesting.log
+  - for file in *.log; do echo "$file"; echo "====================="; cat "$file"; done || true
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
-#  language: android
-#  jdk: oraclejdk8
-#  sudo: true
-#
-#  android:
-#    components:
-##      - platform-tools
-##      - tools
-#      - build-tools-28.0.0
-#      - android-26
-#
-#      - extra-google-google_play_services
-#      - extra-google-m2repository
-#      - extra-android-m2repositor
-#
-#      - sys-img-x86-google_apis-26
-#
-#
-#
-#  before_script:
-#    # Create and start emulator
-#    - echo no | android create avd --force -n test -t android-26 --abi x86
-#    - emulator -avd test -no-skin -no-audio -no-window &
-#    - android-wait-for-emulator
-#    - adb shell input keyevent 82 &
-#
-#  script: ./gradlew connectedAndroidTest
-
-
-
-
-
-    #before_cache:
-# - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  #- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-#cache:
- # directories:
-  #  - $HOME/.gradle/caches/
-   # - $HOME/.gradle/wrapper/
-#env:
-#  global:
-#    - ANDROID_TARGET=android-22
-#    - ANDROID_ABI=armeabi-v7a
-
-#android:
-#  components:
-#    - tools #
-#    - tools
-#    - platform-tools
-#    - build-tools-28.0.3
-#    - android-28
-#    - add-on
-#    - extra
-#    - $ANDROID_TARGET
-#    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
-#
-#licenses:
-#  - 'android-sdk-preview-license-52d11cd2'
-#  - 'android-sdk-license-.+'
-#  - 'google-gdk-license-.+'
- 
-#before_install:
-#  - chmod +x ./gradlew
-#  - ./gradlew dependencies || true
-  
-
-#script:
-#  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --device 'Nexus 4' --sdcard 128M
-#  - emulator -avd test -no-window -skin 768x1280 &
-#  - android-wait-for-emulator
-#  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-#  - ./gradlew jacocoTestReport
-#
-##branches:
-# # only:
-#  #  - master
-#after_success:
-#  - bash <(curl -s https://codecov.io/bash)
