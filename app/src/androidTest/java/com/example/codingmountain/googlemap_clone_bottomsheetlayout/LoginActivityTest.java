@@ -58,12 +58,13 @@ public class LoginActivityTest {
         assertNotNull(loginActivity.findViewById(R.id.input_email));
         assertNotNull(loginActivity.findViewById(R.id.input_password));
 
-
-        onView(withId(R.id.input_password)).perform(typeText("123456"));
+        String password = "123456";
+        String username = "alec@gmail.com";
+        onView(withId(R.id.input_password)).perform(typeText(password));
         closeSoftKeyboard();
         Thread.sleep(1000);
         
-        onView(withId(R.id.input_email)).perform(typeText("alec@gmail.com"));
+        onView(withId(R.id.input_email)).perform(typeText(username));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
