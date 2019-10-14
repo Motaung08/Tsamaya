@@ -41,7 +41,7 @@ script:
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
   #- ./gradlew connectedDebugAndroidTest --info
-  - ./gradlew createDebugCoverageReport --info
+  ./gradlew connectedAndroidTest --info
 after_failure:
   # - echo 'FAILURE'
   # Check apt configuration: http://docs.travis-ci.com/user/ci-environment/#apt-configuration
