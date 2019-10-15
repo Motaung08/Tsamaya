@@ -60,7 +60,7 @@ public class LoginActivityTest {
         assertNotNull(loginActivity.findViewById(R.id.input_email));
         assertNotNull(loginActivity.findViewById(R.id.input_password));
 
-        String password = "123456";
+        String password = "1234567";
         String username = "alec@gmail.com";
         setText(loginActivity._emailText,username);
         setText(loginActivity._passwordText,password);
