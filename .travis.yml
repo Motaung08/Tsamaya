@@ -37,6 +37,13 @@ licenses:
 before_install:
   - chmod +x ./gradlew
   - ./gradlew dependencies || true
+  
+  install:
+    - sdkmanager --list || true
+    - echo yes | sdkmanager "tools"
+    - echo yes | sdkmanager "platforms;android-22" # Latest platform required by SDK tools
+    - echo yes | sdkmanager "extras;android;m2repository"
+    - echo yes | sdkmanager "extras;google;m2repository"
 
 script:
 #   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --device 'Nexus 4' --sdcard 128M
