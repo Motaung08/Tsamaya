@@ -78,7 +78,6 @@ public class LoginActivityTest {
 
 
         onView(withId(R.id.btn_login)).perform(click());
-        onView(withId(R.id.btn_login)).perform(click());
 
         Activity MapActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,10000);
 
@@ -93,27 +92,5 @@ public class LoginActivityTest {
                 text.setText(value);
             }
         });
-    }
-
-    @Test
-    public void onActivityResult() {
-
-    }
-
-    @Test
-    public void onBackPressed() {
-    }
-
-    @Test
-    public void onLoginSuccess() {
-
-    }
-
-    @Test
-    public void onLoginFailed() {
-    }
-
-    @Test
-    public void validate() {
     }
 }
