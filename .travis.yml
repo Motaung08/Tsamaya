@@ -23,6 +23,9 @@ android:
     - build-tools-28.0.3
     - android-28
     - add-on
+    - extra-google-google_play_services #ad
+    - extra-google-m2repository # ad
+    - extra-android-m2repository #ad
     - extra
     - $ANDROID_TARGET
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
@@ -41,7 +44,8 @@ script:
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
   #- ./gradlew connectedDebugAndroidTest --info
-  - ./gradlew createDebugCoverageReport --info
+  #- ./gradlew createDebugCoverageReport --info
+  - ./gradlew connectedAndroidTest --info
 after_failure:
   # - echo 'FAILURE'
   # Check apt configuration: http://docs.travis-ci.com/user/ci-environment/#apt-configuration
