@@ -62,10 +62,11 @@ public class LoginActivityTest {
         String password = "123456";
         String username = "alec@gmail.com";
         setText(loginActivity._emailText,username);
+        setText(loginActivity._passwordText,password);
 //        loginActivity._emailText.setText(username);
-        onView(withId(R.id.input_password)).perform(typeText(password));
-        closeSoftKeyboard();
-        Thread.sleep(1000);
+//        onView(withId(R.id.input_password)).perform(typeText(password));
+//        closeSoftKeyboard();
+//        Thread.sleep(1000);
 
 
 
