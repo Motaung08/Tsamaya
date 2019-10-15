@@ -72,11 +72,12 @@ public class LoginActivityTest {
 
 
         // onView(withId(R.id.input_email)).perform(typeText(username));
-        closeSoftKeyboard();
+//         closeSoftKeyboard();
         Thread.sleep(1000);
 
 
 
+        onView(withId(R.id.btn_login)).perform(click());
         onView(withId(R.id.btn_login)).perform(click());
 
         Activity MapActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,10000);
