@@ -53,14 +53,15 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void login() throws InterruptedException {
+    public void login() throws Throwable {
         assertNotNull(loginActivity.findViewById(R.id.btn_login));
         assertNotNull(loginActivity.findViewById(R.id.input_email));
         assertNotNull(loginActivity.findViewById(R.id.input_password));
 
         String password = "123456";
         String username = "alec@gmail.com";
-        loginActivity._emailText.setText(username);
+        setText(loginActivity._emailText,username);
+//        loginActivity._emailText.setText(username);
         onView(withId(R.id.input_password)).perform(typeText(password));
         closeSoftKeyboard();
         Thread.sleep(1000);
@@ -81,6 +82,14 @@ public class LoginActivityTest {
         assertNotNull(MapActivity);
 
         MapActivity.finish();
+    }
+    private void setText(final EditText text, final String value) throws Throwable {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                text.setText(value);
+            }
+        });
     }
 
     @Test
