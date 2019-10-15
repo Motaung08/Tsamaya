@@ -9,6 +9,7 @@ import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 
@@ -72,12 +73,13 @@ public class LoginActivityTest {
 
 
         // onView(withId(R.id.input_email)).perform(typeText(username));
-//         closeSoftKeyboard();
+//        closeSoftKeyboard();
         Thread.sleep(1000);
 
 
 
-        onView(withId(R.id.btn_login)).perform(click());
+        click(loginActivity._loginButton);
+//        onView(withId(R.id.btn_login)).perform(click());
 
         Activity MapActivity = getInstrumentation().waitForMonitorWithTimeout(monitor,10000);
 
@@ -90,6 +92,14 @@ public class LoginActivityTest {
             @Override
             public void run() {
                 text.setText(value);
+            }
+        });
+    }
+    private void click(final Button button) throws Throwable {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                button.performClick();
             }
         });
     }
